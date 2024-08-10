@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Definir la ruta del directorio
+DIRECTORY="/home/aletheios/Documents/Obsidian_Vault/Notes/Zettelkasten"
+
+# Generar un nombre de archivo con una marca de tiempo
+FILENAME="nota_$(date +'%Y%m%d_%H%M%S').md"
+
+# Definir la ruta completa del archivo
+FILE="$DIRECTORY/$FILENAME"
+
+# Crear y abrir el archivo con nvim
+nvim "$FILE"
+
