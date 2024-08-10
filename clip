@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Archivo temporal
+TMPFILE=$(mktemp)
+
+# Limpiar el portapapeles (opcional, para asegurarse de que esté vacío)
+xclip -selection clipboard /dev/null
+
+# Obtener el contenido actual del portapapeles (ahora estará vacío)
+xclip -selection clipboard -o 2>/dev/null > "$TMPFILE"
+
+# Agregar el nuevo contenido al archivo temporal
+cat /dev/stdin >> "$TMPFILE" 2>&1
+
+# Copiar el contenido combinado al portapapeles
+cat "$TMPFILE" | xclip -selection clipboard
+
+# Limpiar el archivo temporal
+rm "$TMPFILE"
+

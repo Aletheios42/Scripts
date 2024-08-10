@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Directorio de montaje
+MOUNT_POINT="/mnt/usb"
+
+# Desmontar el dispositivo
+echo "Desmontando $MOUNT_POINT"
+sudo umount "$MOUNT_POINT"
+
+# Verificar si la operación fue exitosa
+if [ $? -eq 0 ]; then
+    echo "El dispositivo se desmontó correctamente de $MOUNT_POINT"
+else
+    echo "Error al desmontar el dispositivo de $MOUNT_POINT"
+fi
+
+# Opcional: eliminar el punto de montaje si ya no se necesita
+# sudo rmdir "$MOUNT_POINT"
+

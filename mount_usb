@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Directorio de montaje
+MOUNT_POINT="/mnt/usb"
+
+# Dispositivo USB
+DEVICE="/dev/sda1"
+
+# Crear el punto de montaje si no existe
+if [ ! -d "$MOUNT_POINT" ]; then
+    echo "Creando el punto de montaje en $MOUNT_POINT"
+    sudo mkdir -p "$MOUNT_POINT"
+fi
+
+# Montar el dispositivo
+echo "Montando $DEVICE en $MOUNT_POINT"
+sudo mount "$DEVICE" "$MOUNT_POINT"
+
+# Verificar si la operación fue exitosa
+if mountpoint -q "$MOUNT_POINT"; then
+    echo "El dispositivo se montó correctamente en $MOUNT_POINT"
+else
+    echo "Error al montar el dispositivo en $MOUNT_POINT"
+fi
+

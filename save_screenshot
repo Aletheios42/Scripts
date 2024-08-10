@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Verifica si se proporcionó una ruta como argumento
+if [ -z "$1" ]; then
+  echo "Error: No se proporcionó una ruta de destino."
+  echo "Uso: $0 /ruta/donde/guardar/imagen.png"
+  exit 1
+fi
+
+# Guarda la imagen desde el portapapeles en la ruta especificada
+xclip -selection clipboard -t image/png -o > "$1"
+
+# Verifica si la operación fue exitosa
+if [ $? -eq 0 ]; then
+  echo "Imagen guardada en $1"
+else
+  echo "Error al guardar la imagen."
+fi
+
