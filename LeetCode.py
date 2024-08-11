@@ -9,7 +9,9 @@ import os
 
 def setup_browser():
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')  # Descomentar si quieres que el navegador no se muestre
+    options.add_argument(
+        "--headless"
+    )  # Puedes comentar esta línea para ver el navegador
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
 
@@ -25,32 +27,36 @@ def main():
     driver.get(url)
 
     try:
-        wait = WebDriverWait(driver, 10)
+        # Aumenta el tiempo de espera si es necesario
+        wait = WebDriverWait(driver, 20)
 
         # Depuración: verificar la carga de la página
         print("Esperando a que la página se cargue...")
 
-        # Depuración: captura del título del problema
+        # Selector para el título del problema
         problem_title_element = wait.until(
             EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'div[data-cy="question-title"]')
+                (By.CSS_SELECTOR, "a.no-underline.hover\\:text-blue-s")
             )
         )
         problem_title = problem_title_element.text.strip()
         print(f"Título del problema encontrado: {problem_title}")
 
-        # Depuración: captura de la dificultad
+        # Selector para la dificultad
         difficulty_element = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'div[diff=""]'))
+            EC.presence_of_element_located(
+                (
+                    By.CSS_SELECTOR,
+                    "div.relative.inline-flex.items-center.justify-center.text-caption",
+                )
+            )
         )
         difficulty = difficulty_element.text.strip()
         print(f"Dificultad encontrada: {difficulty}")
 
-        # Depuración: captura de la descripción
+        # Selector para la descripción
         description_element = wait.until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, 'div[data-key="description-content"]')
-            )
+            EC.presence_of_element_located((By.CSS_SELECTOR, "div.elfjS"))
         )
         description = description_element.text.strip()
         print("Descripción del problema capturada.")

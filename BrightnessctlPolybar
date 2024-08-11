@@ -1,0 +1,13 @@
+#!/bin/bash
+# Obtener el brillo actual en porcentaje usando brightnessctl
+
+# Obtén el brillo actual y máximo
+BRIGHTNESS=$(brightnessctl get)
+MAX_BRIGHTNESS=$(brightnessctl max)
+
+# Calcula el porcentaje de brillo
+PERCENTAGE=$((BRIGHTNESS * 100 / MAX_BRIGHTNESS))
+
+# Muestra el porcentaje
+echo "$PERCENTAGE%"
+
