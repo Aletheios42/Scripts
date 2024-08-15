@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Verificar si se pasaron los argumentos necesarios
+if [ "$#" -ne 2 ]; then
+  echo "Uso: $0 <lenguaje> <mensaje>"
+  echo "Ejemplo: $0 bash 'Hola Mundo'"
+  echo "Argumentos posibles para <lenguaje>:"
+  echo "  - bash, python : Comentarios con ##"
+  echo "  - c, java, solidity : Comentarios en bloque con /* */"
+  echo "  - go, cpp, javascript : Comentarios con //"
+  echo "  - lua, sql : Comentarios con --"
+  exit 1
+fi
+
+# Asignar los argumentos a variables
+language="$1"
+message="$2"
+
+# Definir la línea de asteriscos (76 asteriscos)
+line="************************************************************************"
+
+# Definir el carácter de comentario según el lenguaje
+case "$language" in
+bash | python)
+  comment_start="##"
+  comment_end=""
+  ;;
+c | java | solidity)
+  comment_start="/*"
+  comment_end="*/"
+  ;;
+go | cpp | javascript)
+  comment_start="//"
+  comment_end=""
+  ;;
+lua | sql)
+  comment_start="--"
+  comment_end=""
+  ;;
+*)
+  echo "Lenguaje no soportado: $language"
+  echo "Soportado: bash, python, c, java, solidity, go, cpp, javascript, lua, sql"
+  exit 1
+  ;;
+esac
+
+# Calcular el ancho total disponible para el mensaje
+# - Restar la longitud de los comentarios inicial y final (si existe)
+total_length=$((76 - ${#comment_start} - ${#comment_end}))
+
+# Calcular espacios a la izquierda y a la derecha del mensaje para centrarlo
+padding=$(((total_length - ${#message}) / 2))
+padding_right=$((total_length - ${#message} - padding))
+
+# Imprimir el encabezado centrado
+printf "\n"
+printf "%s%s%s\n" "$comment_start" "$line" "$comment_end"
+printf "%s%*s%s%*s%s\n" "$comment_start" "$padding" "" "$message" "$padding_right" "" "$comment_end"
+printf "%s%s%s\n" "$comment_start" "$line" "$comment_end"
+printf "\n"
