@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Verificar si se pasaron los argumentos necesarios
-if [ "$#" -ne 2 ]; then
-  echo "Uso: $0 <lenguaje> <mensaje>"
-  echo "Ejemplo: $0 bash 'Hola Mundo'"
-  echo "Argumentos posibles para <lenguaje>:"
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+  echo "Uso: $0 <mensaje> [<lenguaje>]"
+  echo "Ejemplo: $0 'Hola Mundo' [bash]"
+  echo "Argumentos posibles para <lenguaje> (opcional, por defecto 'c'):"
   echo "  - bash, python : Comentarios con ##"
   echo "  - c, java, solidity : Comentarios en bloque con /* */"
   echo "  - go, cpp, javascript : Comentarios con //"
@@ -13,8 +13,8 @@ if [ "$#" -ne 2 ]; then
 fi
 
 # Asignar los argumentos a variables
-language="$1"
-message="$2"
+message="$1"
+language="${2:-c}" # Asignar 'c' como valor predeterminado si no se especifica
 
 # Definir la línea de asteriscos (76 asteriscos)
 line="************************************************************************"
