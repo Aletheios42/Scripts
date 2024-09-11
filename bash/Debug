@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Función para limpiar y salir del script
+cleanup() {
+  echo "Limpiando y saliendo..."
+  rm -f debug # Eliminar el ejecutable
+  exit 0
+}
+
+# Configurar el trap para capturar señales de interrupción
+trap cleanup SIGINT SIGTERM
+
+# Verificar si se ha proporcionado un argumento
+if [ $# -ne 1 ]; then
+  echo "Uso: $0 <archivo de código fuente>"
+  exit 1
+fi
+
+# Leer el nombre del archivo de código fuente desde el argumento
+Input=$1
+
+# Verificar que el archivo existe
+if [ ! -f "$Input" ]; then
+  echo "El archivo $Input no existe. Terminado."
+  exit 1
+fi
+
+# Bucle infinito
+while true; do
+  # Obtener la hora actual
+  current_time=$(date +"%H:%M:%S")
+  echo "Hora actual: $current_time"
+
+  # Compilar el archivo fuente
+  gcc "$Input" -o debug
+
+  # Verificar si la compilación fue exitosa
+  if [ $? -ne 0 ]; then
+    echo "Error en la compilación."
+    continue
+  fi
+
+  # Ejecutar el binario
+  ./debug
+
+  #Para poder ver el resultado
+  sleep 1
+  # Limpiar la pantalla
+  clear
+done
