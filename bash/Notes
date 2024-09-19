@@ -1,14 +1,50 @@
 #!/bin/bash
 
-# Definir la ruta del directorio
-DIRECTORY="/home/aletheios/Documents/Obsidian_Vault/Notes/Zettelkasten"
+# Carpeta de notas de Obsidian (usa la variable Vault definida en tu .bashrc)
+OBS_PATH="$Vault"
 
-# Generar un nombre de archivo con una marca de tiempo
-FILENAME="nota_$(date +'%Y%m%d_%H%M%S').md"
+# Verifica si la ruta es válida
+if [ ! -d "$OBS_PATH" ]; then
+  echo "Error: La ruta $OBS_PATH no es válida o no tienes permisos." >&2
+  exit 1
+fi
 
-# Definir la ruta completa del archivo
-FILE="$DIRECTORY/$FILENAME"
+# Verifica si se ha pasado el título como argumento
+if [ -z "$1" ]; then
+  echo "Error: No se ha proporcionado un título." >&2
+  echo "Uso: ./Notes 'Título de la nota'" >&2
+  exit 1
+fi
 
-# Crear y abrir el archivo con nvim
-nvim "$FILE"
+# Formatea la fecha actual
+START_DATE=$(date +"%B %d, %Y")
+MOD_DATE=$START_DATE
 
+# Crea el nombre de archivo a partir del título, reemplazando espacios con guiones bajos y añadiendo .md
+TITLE="$1"
+FILE_NAME="${TITLE// /_}.md"
+FILE_PATH="$OBS_PATH/$FILE_NAME"
+
+# Verifica si el archivo ya existe
+if [ -f "$FILE_PATH" ]; then
+  echo "Error: La nota '$TITLE' ya existe en $OBS_PATH." >&2
+  exit 1
+fi
+
+# Plantilla de la nota
+cat <<EOL >"$FILE_PATH"
+# $TITLE
+
+Fecha de Inicio: $START_DATE
+Modificaciones: $MOD_DATE
+
+Descripción:
+
+Tags intrínsecos:
+    - **Calidad**: X/3        **Estado**: X/3         **Prioridad**: X/3
+
+Tags:
+     
+Referencias:
+Fuentes:
+EOL

@@ -44,7 +44,7 @@ while true; do
   ./debug
 
   #Para poder ver el resultado
-  sleep 1
+  sleep 2
   # Limpiar la pantalla
   clear
 done

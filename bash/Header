@@ -17,7 +17,7 @@ message="$1"
 language="${2:-c}" # Asignar 'c' como valor predeterminado si no se especifica
 
 # Definir la línea de asteriscos (76 asteriscos)
-line="************************************************************************"
+line="**************************************************************"
 
 # Definir el carácter de comentario según el lenguaje
 case "$language" in
@@ -46,7 +46,7 @@ esac
 
 # Calcular el ancho total disponible para el mensaje
 # - Restar la longitud de los comentarios inicial y final (si existe)
-total_length=$((76 - ${#comment_start} - ${#comment_end}))
+total_length=$((66 - ${#comment_start} - ${#comment_end}))
 
 # Calcular espacios a la izquierda y a la derecha del mensaje para centrarlo
 padding=$(((total_length - ${#message}) / 2))
