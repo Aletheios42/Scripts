@@ -1,9 +1,15 @@
 #!/bin/bash
 
-DIR=$(find . -type d -not -path '*/\.*' | fzf -m)
+# Busca directorios no ocultos
+DIR=$(find "$HOME" -type d -not -path '*/.*' | fzf -m)
 
-if [-n "$DIR"]; then
-  echo "cambiando al directorio: $DIR"
-  cd "$DIR || return
+# Verifica si se ha seleccionado un directorio
+if [ -n "$DIR" ]; then
+  echo "Cambiando al directorio: $DIR"
+  cd "$DIR" || {
+    echo "Error al cambiar al directorio $DIR."
+    return 1
+  }
 else
-  echo "Invalid Route."
+  echo "Ruta no válida."
+fi
